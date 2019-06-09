@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-import pl.sda.restfull.model.enums.CategoryEnum;
+import pl.sda.mysimpleblog.model.enums.CategoryEnum;
 
 import javax.persistence.*;
 
