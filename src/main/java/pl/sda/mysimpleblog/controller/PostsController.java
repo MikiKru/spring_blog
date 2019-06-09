@@ -68,6 +68,11 @@ public class PostsController {
         Post post = postsService.getPostById(post_id);
         // przekazanie istniejącego posta do formularza modyfikacji
         model.addAttribute("post", post);
+        List<CategoryEnum> categories =
+                new ArrayList<>(Arrays.asList(CategoryEnum.values()));
+        System.out.println(categories);
+        // przekazanie listy kategorii do znacznika SELECT
+        model.addAttribute("categories", categories);
         return "updatepost";
     }
 
