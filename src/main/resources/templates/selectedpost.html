@@ -80,7 +80,7 @@
 </article>
 <hr>
 <h1 th:align="center">Comments</h1>
-<div class="container">
+<div class="container" th:if="${post.getComments().size() > 0}">
     <div class="row" th:each="comment : ${post.getComments()}">
         <div class="col-lg-8 col-md-10 mx-auto">
             <p th:text="${comment.getMessage()}">message</p>
@@ -88,6 +88,47 @@
         </div>
     </div>
 </div>
+<div class="container" th:if="${post.getComments().size() == 0}">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <p>This post is not commented yet!</p>
+        </div>
+    </div>
+</div>
+<h1 th:align="center">Add comment</h1>
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <form th:align="center"
+                      th:action="@{'/addcomment/' + ${post.getId()} + '/4'}"
+                      th:object="${comment}"
+                      th:method="post"
+                      name="sentMessage" id="contactForm" novalidate>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <input th:align="center" type="text"
+                                   th:field="*{message}"
+                                   class="form-control"
+                                   placeholder="input your comment"
+                                   id="name"
+                                   required data-validation-required-message="Please input your message">
+                            <br>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit"
+                                class="btn btn-primary"
+                                id="sendMessageButton">
+                            send
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+
 
 <!-- Footer -->
 <footer>
