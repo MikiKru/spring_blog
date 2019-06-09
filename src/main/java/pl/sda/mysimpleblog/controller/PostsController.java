@@ -3,10 +3,7 @@ package pl.sda.mysimpleblog.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.sda.mysimpleblog.model.Comment;
 import pl.sda.mysimpleblog.model.Post;
 import pl.sda.mysimpleblog.model.enums.CategoryEnum;
@@ -58,6 +55,25 @@ public class PostsController {
     @PostMapping("/addpost")
     public String addPost(@ModelAttribute Post post){
         postsService.savePost(post);
+        return "redirect:/";
+    }
+    @DeleteMapping("/delete/{post_id}")
+    public String deletePost(@PathVariable Long post_id){
+        postsService.deletePost(post_id);
+        return "redirect:/";
+    }
+    @GetMapping("/update/{post_id}")
+    public String updatePost(@PathVariable Long post_id, Model model){
+        // pobranie istniejącego posta
+        Post post = postsService.getPostById(post_id);
+        // przekazanie istniejącego posta do formularza modyfikacji
+        model.addAttribute("post", post);
+        return "updatepost";
+    }
+
+    @PutMapping("/update/{post_id}")
+    public String updatePost(@PathVariable Long post_id, @ModelAttribute Post post){
+        postsService.updatePost(post_id, post);
         return "redirect:/";
     }
 }
