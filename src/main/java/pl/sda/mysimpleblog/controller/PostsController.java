@@ -28,7 +28,9 @@ public class PostsController {
         return "addpost";
     }
     @GetMapping("/post/{post_id}")
-    public String getPost(@PathVariable Long post_id){
+    public String getPost(@PathVariable Long post_id, Model model){
+        Post post = postsService.getPostById(post_id);
+        model.addAttribute("post",post);
         return "selectedpost";
     }
 }

@@ -16,4 +16,10 @@ public class PostsService {
     public List<Post> getAllPosts(){
         return postsRepository.findAll();
     }
+    public Post getPostById(Long post_id){
+        if(postsRepository.findById(post_id).isPresent()) {
+            return postsRepository.getOne(post_id);
+        }
+        return new Post();
+    }
 }

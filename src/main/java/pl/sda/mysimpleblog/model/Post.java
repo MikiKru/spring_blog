@@ -1,5 +1,6 @@
 package pl.sda.mysimpleblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,8 @@ import org.hibernate.annotations.Type;
 import pl.sda.mysimpleblog.model.enums.CategoryEnum;
 
 import javax.persistence.*;
-
+import java.util.ArrayList;
+import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,7 @@ public class Post {
     @Type(type = "text")
     private String content;
     @Enumerated
+    //@Transient - ignoruje mapowanie orm dla tego pola
     private CategoryEnum category;
     @ManyToOne()
     @JoinColumn(name = "user_id")
@@ -31,4 +34,7 @@ public class Post {
         this.category = category;
         this.user = user;
     }
+    @JsonIgnore
+    @OneToMany(mappedBy = "post")
+    List<Comment> comments = new ArrayList<>();
 }
