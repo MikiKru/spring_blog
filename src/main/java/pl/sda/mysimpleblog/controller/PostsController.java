@@ -9,4 +9,8 @@ public class PostsController {
     public String home(){   // metoda
         return "posts";     // zwracana nazwa widoku html
     }
+    @GetMapping("/addpost")
+    public String addPost(){
+        return "addpost";
+    }
 }
