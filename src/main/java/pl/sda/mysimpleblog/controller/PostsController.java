@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import pl.sda.mysimpleblog.model.Post;
 import pl.sda.mysimpleblog.service.PostsService;
 import java.util.List;
@@ -25,5 +26,9 @@ public class PostsController {
     @GetMapping("/addpost")
     public String addPost(){
         return "addpost";
+    }
+    @GetMapping("/post/{post_id}")
+    public String getPost(@PathVariable Long post_id){
+        return "selectedpost";
     }
 }

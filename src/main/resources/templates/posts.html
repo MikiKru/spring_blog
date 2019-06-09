@@ -69,7 +69,7 @@
     <div class="row" th:each="post : ${posts}">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">
-          <a href="addpost.html">
+          <a th:href="@{'/post/' + ${post.getId()}}">
             <h2 class="post-title" th:text="${post.getTitle()}">
               title
             </h2>
