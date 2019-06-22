@@ -38,8 +38,11 @@ public class PostsService {
         comment.setUser(user);
         commentRepository.save(comment);
     }
-    public void savePost(Post post){
-        post.setUser(userRepository.getOne(4L));
+    public void savePost(Post post, String email){
+        // odczyt obiektu user na podstawie pola email
+        User user = userRepository.getByEmail(email);
+        // przypisanie autora do posta
+        post.setUser(user);
         postsRepository.save(post);
     }
     public void deletePost(Long post_id){

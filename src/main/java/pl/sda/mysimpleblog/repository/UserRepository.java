@@ -6,4 +6,5 @@ import pl.sda.mysimpleblog.model.User;
 
 @Repository                                        // model,typPK
 public interface UserRepository extends JpaRepository<User,Long> {
+    User getByEmail(String email);
 }

@@ -46,10 +46,7 @@ public class PostsController {
         return "redirect:/post/" + post_id;
     }
     @GetMapping("/addpost")
-    public String addPost(Model model, Authentication authentication){
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
-        System.out.println("LOGIN: " + principal.getUsername());
-        System.out.println("PASSWORD: " + principal.getPassword());
+    public String addPost(Model model){
         model.addAttribute("post",new Post());
         List<CategoryEnum> categories =
                 new ArrayList<>(Arrays.asList(CategoryEnum.values()));
@@ -59,8 +56,9 @@ public class PostsController {
         return "addpost";
     }
     @PostMapping("/addpost")
-    public String addPost(@ModelAttribute Post post){
-        postsService.savePost(post);
+    public String addPost(@ModelAttribute Post post, Authentication authentication){
+        UserDetails loggedUserDetails = (UserDetails) authentication.getPrincipal();
+        postsService.savePost(post, loggedUserDetails.getUsername());
         return "redirect:/";
     }
     @DeleteMapping("/delete/{post_id}")
