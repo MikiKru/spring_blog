@@ -1,6 +1,8 @@
 package pl.sda.mysimpleblog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import pl.sda.mysimpleblog.model.Post;
 import pl.sda.mysimpleblog.model.enums.CategoryEnum;
 import pl.sda.mysimpleblog.service.PostsService;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +46,10 @@ public class PostsController {
         return "redirect:/post/" + post_id;
     }
     @GetMapping("/addpost")
-    public String addPost(Model model){
+    public String addPost(Model model, Authentication authentication){
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        System.out.println("LOGIN: " + principal.getUsername());
+        System.out.println("PASSWORD: " + principal.getPassword());
         model.addAttribute("post",new Post());
         List<CategoryEnum> categories =
                 new ArrayList<>(Arrays.asList(CategoryEnum.values()));
