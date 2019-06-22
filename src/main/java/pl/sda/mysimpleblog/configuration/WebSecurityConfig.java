@@ -17,8 +17,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // konfiguracja zabezpieczeń dla protokołu http
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/addpost").hasAnyAuthority("ROLE_USER") // wymaga upr USER
-                .antMatchers("/update/*").hasAnyAuthority("ROLE_USER")
+                .antMatchers("/addpost").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN") // wymaga upr USER
+                .antMatchers("/update/*").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/delete/*").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .anyRequest().permitAll()                                    // pozostałe bez upr
 
                 .and()
@@ -27,8 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .loginProcessingUrl("/login-process")
-                    .defaultSuccessUrl("/");
+                    .defaultSuccessUrl("/")
 
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/");
     }
     @Autowired
     DataSource dataSource;

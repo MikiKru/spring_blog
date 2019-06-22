@@ -88,7 +88,9 @@
     <div class="row" th:each="comment : ${post.getComments()}">
         <div class="col-lg-8 col-md-10 mx-auto">
             <p th:text="${comment.getMessage()}">message</p>
-            <p th:text="${comment.getUser().getEmail()}">author</p>
+            <p th:if="${comment.getUser() != null}" th:text="${comment.getUser().getEmail()}">author</p>
+            <p th:if="${comment.getUser() == null}" >anonim</p>
+
         </div>
     </div>
 </div>

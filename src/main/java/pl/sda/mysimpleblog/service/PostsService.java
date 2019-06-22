@@ -1,6 +1,7 @@
 package pl.sda.mysimpleblog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -35,12 +36,15 @@ public class PostsService {
         }
         return new Post();
     }
-    public void addComment(Comment comment, Long post_id, Long user_id){
-        User user = userRepository.getOne(user_id);
-        Post post = postsRepository.getOne(post_id);
-        comment.setPost(post);
-        comment.setUser(user);
-        commentRepository.save(comment);
+    public void addComment(Comment comment, Long post_id, Authentication auth){
+        if(auth != null) {
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            String loggedEmail = userDetails.getUsername();
+            comment.setUser(userRepository.getByEmail(loggedEmail));
+            }
+            Post post = postsRepository.getOne(post_id);
+            comment.setPost(post);
+            commentRepository.save(comment);
     }
     public void savePost(Post post, String email){
         // odczyt obiektu user na podstawie pola email

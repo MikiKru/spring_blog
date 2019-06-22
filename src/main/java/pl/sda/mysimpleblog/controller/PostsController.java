@@ -46,8 +46,9 @@ public class PostsController {
     @PostMapping("/addcomment/{post_id}/{user_id}")
     public String addComment(@ModelAttribute Comment comment,
                              @PathVariable Long post_id,
-                             @PathVariable Long user_id){
-        postsService.addComment(comment,post_id, user_id);
+                             @PathVariable Long user_id,
+                             Authentication auth){
+        postsService.addComment(comment,post_id, auth);
         // przekierowanie na adres URL nie na nazwę widoku
         return "redirect:/post/" + post_id;
     }
