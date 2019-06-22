@@ -78,12 +78,13 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <form th:align="center"
-                      th:action="@{/...}"
+                      th:action="@{/login-process}"
                       th:method="post"
                       name="sentMessage" id="contactForm" novalidate>
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">
                             <input th:align="center" type="text"
+                                   th:name="login"
                                    class="form-control"
                                    placeholder="input your email"
                                    id="name">
@@ -93,7 +94,7 @@
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">
                             <input th:align="center" type="password"
-                                   th:field="*{password}"
+                                   th:name="password"
                                    class="form-control"
                                    placeholder="input your password">
                             <br>
@@ -105,7 +106,7 @@
                                 id="sendMessageButton">
                             login
                         </button>
-                        <span>login_error</span>
+                        <!--<span>login_error</span>-->
                     </div>
                 </form>
             </div>

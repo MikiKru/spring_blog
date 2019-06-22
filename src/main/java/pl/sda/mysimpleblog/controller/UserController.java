@@ -46,4 +46,8 @@ public class UserController {
                 "passwordMessage", "Passwords not matched!");
         return "adduser";
     }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
 }
