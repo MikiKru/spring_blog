@@ -110,6 +110,7 @@
                                    class="form-control"
                                    placeholder="repeat your password">
                             <span th:errors="*{password_confirm}">email_error</span>
+                            <span th:if="${passwordMessage} != null" th:text="${passwordMessage}">passwords_compare</span>
                             <br>
                         </div>
                     </div>

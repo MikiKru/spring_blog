@@ -30,7 +30,9 @@ public class UserController {
     @PostMapping("/register")
     public String addUser(
             @ModelAttribute @Valid User user,
-            BindingResult bindingResult){
+            BindingResult bindingResult,
+            Model model){
+
         if(bindingResult.hasErrors()){
             return "adduser";
         }
@@ -40,8 +42,8 @@ public class UserController {
             userService.registerUser(user);
             return "redirect:/";
         }
-        return "redirect:/register";
+        model.addAttribute(                                             // przekazanie do widoku komentarza dot. porównania haseł
+                "passwordMessage", "Passwords not matched!");
+        return "adduser";
     }
-
-
 }
