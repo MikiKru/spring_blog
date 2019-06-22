@@ -1,6 +1,8 @@
 package pl.sda.mysimpleblog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import pl.sda.mysimpleblog.model.Comment;
 import pl.sda.mysimpleblog.model.Post;
@@ -10,6 +12,8 @@ import pl.sda.mysimpleblog.repository.PostsRepository;
 import pl.sda.mysimpleblog.repository.UserRepository;
 
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class PostsService {
     PostsRepository postsRepository;
@@ -56,7 +60,13 @@ public class PostsService {
         post.setCategory(updatedPost.getCategory());
         postsRepository.save(post);
     }
-
+    public boolean isAdmin(UserDetails userDetails){
+        Set<GrantedAuthority> authorities = (Set<GrantedAuthority>) userDetails.getAuthorities();
+        if(authorities.toString().contains("ROLE_ADMIN")){
+            return true;
+        }
+        return false;
+    }
 
 
 }

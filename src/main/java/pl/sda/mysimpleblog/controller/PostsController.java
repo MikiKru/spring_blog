@@ -23,7 +23,13 @@ public class PostsController {
         this.postsService = postsService;
     }
     @GetMapping("/")        // adres url
-    public String home(Model model){   // metoda
+    public String home(Model model, Authentication auth){   // metoda
+        if(auth != null){
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            // przekazuję do widoku email zalogowanego użytkownika
+            model.addAttribute("loggedEmail", userDetails.getUsername());
+            model.addAttribute("isAdmin", postsService.isAdmin(userDetails));
+        }
         List<Post> posts = postsService.getAllPosts();
         // przekazanie obiektu do widoku
         // model.addAttribute(nazwa w html, obiekt przekazywany)

@@ -28,7 +28,8 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand">niezalogowany</a>
+      <a th:if="${loggedEmail} != null" th:text="${loggedEmail}" class="navbar-brand">logged</a>
+      <a th:if="${loggedEmail} == null" class="navbar-brand">not logged</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -86,11 +87,13 @@
         <hr>
         <!-- Pager -->
         <div class="clearfix">
-          <form  th:action="@{'/delete/' + ${post.getId()}}" th:method="delete">
-            <input class="btn btn-primary float-right" type="submit" value="delete">
+          <form th:if="${loggedEmail}!= null"  th:action="@{'/delete/' + ${post.getId()}}" th:method="delete">
+            <input th:if="${loggedEmail.equals(post.getUser().getEmail()) || isAdmin}" class="btn btn-primary float-right" type="submit" value="delete">
+            <!--<input th:if="${isAdmin}" class="btn btn-primary float-right" type="submit" value="delete">-->
           </form>
-          <form  th:action="@{'/update/' + ${post.getId()}}" th:method="get">
-            <input class="btn btn-primary float-right" type="submit" value="update">
+          <form th:if="${loggedEmail}!= null" th:action="@{'/update/' + ${post.getId()}}" th:method="get">
+            <input th:if="${loggedEmail.equals(post.getUser().getEmail()) || isAdmin}" class="btn btn-primary float-right" type="submit" value="update">
+            <!--<input th:if="${isAdmin}" class="btn btn-primary float-right" type="submit" value="delete">-->
           </form>
       </div>
       </div>
