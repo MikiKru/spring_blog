@@ -28,7 +28,7 @@ public class User {
     @Size(min = 6, message = "Password must have at least 6 characters")
     private String password;
     private LocalDateTime register_date = LocalDateTime.now();
-    private boolean activity = false;
+    private boolean activity = true;
     @Transient
     @NotBlank(message = "Password can't be null")
     @Size(min = 6, message = "Password must have at least 6 characters")

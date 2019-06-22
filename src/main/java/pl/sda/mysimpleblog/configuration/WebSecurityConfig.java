@@ -24,24 +24,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .formLogin().loginPage("/login")
-                    .usernameParameter("login")
+                    .usernameParameter("email")
                     .passwordParameter("password")
-                    .loginProcessingUrl("login-process")
+                    .loginProcessingUrl("/login-process")
                     .defaultSuccessUrl("/");
 
     }
     @Autowired
     DataSource dataSource;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    PasswordEncoder bCryptPasswordEncoder;
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .usersByUsernameQuery("SELECT u.email, u.password, u.activity FROM user u WHERE u.email = ?")
                 .authoritiesByUsernameQuery("SELECT u.email, r.role_name FROM " +
                                                 "user u  JOIN user_role ur ON (u.id = ur.user_id) " +
-                                                        "JOIN role r ON (r.id = ur.role_id)")
-                .dataSource(dataSource).passwordEncoder(passwordEncoder);
+                                                        "JOIN role r ON (r.id = ur.role_id) " +
+                                                "WHERE u.email = ?")
+                .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
     }
 
 
