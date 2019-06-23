@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.sda.mysimpleblog.model.Contact;
+import pl.sda.mysimpleblog.service.AutoMailingService;
 import pl.sda.mysimpleblog.service.ContactService;
 
 import javax.validation.Valid;
@@ -18,9 +19,11 @@ import javax.validation.Valid;
 public class ContactController {
 
     ContactService contactService;
+    AutoMailingService autoMailingService;
     @Autowired
-    public ContactController(ContactService contactService) {
+    public ContactController(ContactService contactService, AutoMailingService autoMailingService) {
         this.contactService = contactService;
+        this.autoMailingService = autoMailingService;
     }
 
     @GetMapping("/contact")
@@ -40,7 +43,13 @@ public class ContactController {
         if(bindingResult.hasErrors()){
             return "contact";
         }
+        // zapis do db
         contactService.addContact(contact);
+        // wysłanie auto-mialingu
+        autoMailingService.sendMessage(
+                contact.getEmail(),
+                "Potwierdzenie wysłania wiadomości",
+                "Dziękujemy za wysłanie wiadomości.");
         return "redirect:/";
     }
 }

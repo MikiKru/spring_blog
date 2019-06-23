@@ -31,5 +31,5 @@ public class Contact {
     @NotBlank(message = "Name can't be blank")
     private String message;
     private LocalDateTime date_added = LocalDateTime.now();
-
+    private boolean status = false;
 }
