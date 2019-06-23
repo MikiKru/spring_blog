@@ -71,6 +71,12 @@ public class PostsService {
         }
         return false;
     }
-
+    public Long getPostIdByCommentId(Long comment_id){
+        Comment comment = commentRepository.getOne(comment_id);
+        return comment.getPost().getId();
+    }
+    public void deleteComment(Long comment_id){
+        commentRepository.deleteById(comment_id);
+    }
 
 }

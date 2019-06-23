@@ -37,7 +37,15 @@ public class PostsController {
         return "posts";     // zwracana nazwa widoku html
     }
     @GetMapping("/post/{post_id}")
-    public String getPost(@PathVariable Long post_id, Model model){
+    public String getPost(
+            @PathVariable Long post_id,
+            Model model,
+            Authentication auth){
+        if(auth != null){
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            model.addAttribute("loggedEmail", userDetails.getUsername());
+            model.addAttribute("isAdmin", postsService.isAdmin(userDetails));
+        }
         Post post = postsService.getPostById(post_id);
         model.addAttribute("post",post);
         model.addAttribute("comment",new Comment());
@@ -91,5 +99,13 @@ public class PostsController {
     public String updatePost(@PathVariable Long post_id, @ModelAttribute Post post){
         postsService.updatePost(post_id, post);
         return "redirect:/";
+    }
+    @DeleteMapping("/delete_comment/{comment_id}")
+    public String deleteComment(@PathVariable Long comment_id){
+        // wydobycie id posta z komentarza
+        Long post_id = postsService.getPostIdByCommentId(comment_id);
+        // usuwanie komentarza po id
+        postsService.deleteComment(comment_id);
+        return "redirect:/post/" + post_id;
     }
 }

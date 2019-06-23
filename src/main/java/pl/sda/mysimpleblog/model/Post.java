@@ -35,6 +35,9 @@ public class Post {
         this.user = user;
     }
     @JsonIgnore
-    @OneToMany(mappedBy = "post")
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER, mappedBy = "post"
+    )
     List<Comment> comments = new ArrayList<>();
 }
