@@ -8,4 +8,6 @@ import java.util.List;
 
 @Repository
 public interface PostsRepository extends JpaRepository<Post,Long> {
+    // SELECT * FROM post WHERE category = ?
+    List<Post> findAllByCategory(CategoryEnum category);
 }

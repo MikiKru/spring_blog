@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.sda.mysimpleblog.model.Comment;
 import pl.sda.mysimpleblog.model.Post;
 import pl.sda.mysimpleblog.model.User;
+import pl.sda.mysimpleblog.model.enums.CategoryEnum;
 import pl.sda.mysimpleblog.repository.CommentRepository;
 import pl.sda.mysimpleblog.repository.PostsRepository;
 import pl.sda.mysimpleblog.repository.UserRepository;
@@ -91,6 +92,9 @@ public class PostsService {
         Post post = postsRepository.getOne(post_id);
         post.setNot_like_no(post.getNot_like_no()+ 1);
         postsRepository.save(post);
+    }
+    public List<Post> filterByCategory(CategoryEnum categoryEnum){
+        return postsRepository.findAllByCategory(categoryEnum);
     }
 
 }

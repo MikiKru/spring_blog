@@ -43,6 +43,12 @@ public class PostsController {
         model.addAttribute("posts",posts);
         return "posts";     // zwracana nazwa widoku html
     }
+    @GetMapping("/filter_category{category}")
+    public String filterCategories(@PathVariable CategoryEnum category, Model model){
+        List<Post> posts = postsService.filterByCategory(category);
+        model.addAttribute("posts",posts);
+        return "posts";
+    }
     @GetMapping("/post/{post_id}")
     public String getPost(
             @PathVariable Long post_id,
