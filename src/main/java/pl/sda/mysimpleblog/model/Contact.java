@@ -28,6 +28,7 @@ public class Contact {
     @Size(min = 9, message = "Invalid phone number")
     private String phone;
     @Type(type = "text")
+    @NotBlank(message = "Name can't be blank")
     private String message;
     private LocalDateTime date_added = LocalDateTime.now();
 
