@@ -94,7 +94,7 @@
             <p th:if="${comment.getUser() == null}">anonim</p>
 
             <div class="clearfix">
-                <form th:if="${loggedEmail!= null && comment.getUser() != null}" th:action="@{'/delete_comment/' + ${comment.getId()}}" th:method="delete">
+                <form th:if="${loggedEmail != null && comment.getUser() != null}" th:action="@{'/delete_comment/' + ${comment.getId()}}" th:method="delete">
                     <input th:if="${loggedEmail.equals(comment.getUser().getEmail())}" class="btn btn-primary float-right" type="submit" value="delete">
                 </form>
                 <form th:if="${isAdmin == true && comment.getUser() == null}" th:action="@{'/delete_comment/' + ${comment.getId()}}" th:method="delete">
