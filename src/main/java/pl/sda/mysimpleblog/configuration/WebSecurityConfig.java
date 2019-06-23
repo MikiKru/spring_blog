@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .loginProcessingUrl("/login-process")
+                    .failureUrl("/errorLogin")
                     .defaultSuccessUrl("/")
 
                 .and()
