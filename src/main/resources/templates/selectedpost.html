@@ -69,6 +69,8 @@
                     <h1 th:text="${post.getTitle()}">title</h1>
                     <h2 th:text="${post.getUser().getEmail()}">author</h2>
                     <span class="meta" th:text="${post.getCategory()}"> category </span>
+                    <span class="meta" th:text="${'Likes: ' + post.getLike_no()}"> like </span>
+                    <span class="meta" th:text="${'Not likes: ' + post.getNot_like_no()}"> not like </span>
                 </div>
             </div>
         </div>
@@ -85,6 +87,14 @@
     </div>
 </article>
 <hr>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <a th:href="@{'/post_like/' + ${post.getId()}}">I like it!</a> <br>
+            <a th:href="@{'/post_not_like/' + ${post.getId()}}">I don't like it!</a>
+        </div>
+    </div>
+</div>
 <h1 th:align="center">Comments</h1>
 <div class="container" th:if="${post.getComments().size() > 0}">
     <div class="row" th:each="comment : ${post.getComments()}">

@@ -108,4 +108,14 @@ public class PostsController {
         postsService.deleteComment(comment_id);
         return "redirect:/post/" + post_id;
     }
+    @GetMapping("/post_like/{post_id}")
+    public String likePost(@PathVariable Long post_id){
+        postsService.likePost(post_id);
+        return "redirect:/post/" + post_id;
+    }
+    @GetMapping("/post_not_like/{post_id}")
+    public String notLikePost(@PathVariable Long post_id){
+        postsService.notLikePost(post_id);
+        return "redirect:/post/" + post_id;
+    }
 }

@@ -80,4 +80,15 @@ public class PostsService {
         commentRepository.deleteById(comment_id);
     }
 
+    public void likePost(Long post_id){
+        Post post = postsRepository.getOne(post_id);
+        post.setLike_no(post.getLike_no()+ 1);
+        postsRepository.save(post);
+    }
+    public void notLikePost(Long post_id){
+        Post post = postsRepository.getOne(post_id);
+        post.setNot_like_no(post.getNot_like_no()+ 1);
+        postsRepository.save(post);
+    }
+
 }
