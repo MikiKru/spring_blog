@@ -12,9 +12,9 @@ import pl.sda.mysimpleblog.model.enums.CategoryEnum;
 import pl.sda.mysimpleblog.service.PostsService;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Controller
 public class PostsController {
     PostsService postsService;
@@ -31,6 +31,13 @@ public class PostsController {
             model.addAttribute("isAdmin", postsService.isAdmin(userDetails));
         }
         List<Post> posts = postsService.getAllPosts();
+        // wydobycie listy kategorii
+        Set<CategoryEnum> categories = new HashSet<>();
+        for (Post post : posts) {
+            categories.add(post.getCategory());
+        }
+        // przekazanie listy kategorii do widoku
+        model.addAttribute("categories", categories);
         // przekazanie obiektu do widoku
         // model.addAttribute(nazwa w html, obiekt przekazywany)
         model.addAttribute("posts",posts);
@@ -47,6 +54,12 @@ public class PostsController {
             model.addAttribute("isAdmin", postsService.isAdmin(userDetails));
         }
         Post post = postsService.getPostById(post_id);
+        // sortowanie za pomoca stream API
+        post.setComments(post.getComments()
+                .stream()
+                .sorted(Comparator.comparing(Comment::getId).reversed())
+                .collect(Collectors.toList())
+                );
         model.addAttribute("post",post);
         model.addAttribute("comment",new Comment());
         return "selectedpost";

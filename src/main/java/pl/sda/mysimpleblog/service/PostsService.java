@@ -1,6 +1,7 @@
 package pl.sda.mysimpleblog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +29,8 @@ public class PostsService {
     }
 
     public List<Post> getAllPosts(){
-        return postsRepository.findAll();
+        // sortowanie po id malejąco
+        return postsRepository.findAll(Sort.by("id").descending());
     }
 
     public Post getPostById(Long post_id){
