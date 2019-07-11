@@ -66,6 +66,7 @@ public class PostsController {
                 .sorted(Comparator.comparing(Comment::getId).reversed())
                 .collect(Collectors.toList())
                 );
+//        System.out.println(post.getComments().toString());
         model.addAttribute("post",post);
         model.addAttribute("comment",new Comment());
         return "selectedpost";

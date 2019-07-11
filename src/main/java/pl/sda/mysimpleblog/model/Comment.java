@@ -1,8 +1,10 @@
 package pl.sda.mysimpleblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -18,6 +20,8 @@ public class Comment {
     @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
+
+    @JsonIgnore
     @ManyToOne(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY

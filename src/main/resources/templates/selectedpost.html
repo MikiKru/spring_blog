@@ -97,17 +97,17 @@
 </div>
 <h1 th:align="center">Comments</h1>
 <div class="container" th:if="${post.getComments().size() > 0}">
-    <div class="row" th:each="comment : ${post.getComments()}">
+    <div class="row" th:each="c : ${post.getComments()}">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <p th:text="${comment.getMessage()}">message</p>
-            <p th:if="${comment.getUser() != null}" th:text="${comment.getUser().getEmail()}">author</p>
-            <p th:if="${comment.getUser() == null}">anonim</p>
+            <p th:text="${c.getMessage()}">message</p>
+            <p th:if="${c.getUser() != null}" th:text="${c.getUser().getEmail()}">author</p>
+            <p th:if="${c.getUser() == null}">anonim</p>
 
             <div class="clearfix">
-                <form th:if="${loggedEmail != null && comment.getUser() != null}" th:action="@{'/delete_comment/' + ${comment.getId()}}" th:method="delete">
-                    <input th:if="${loggedEmail.equals(comment.getUser().getEmail())}" class="btn btn-primary float-right" type="submit" value="delete">
+                <form th:if="${loggedEmail != null && c.getUser() != null}" th:action="@{'/delete_comment/' + ${c.getId()}}" th:method="delete">
+                    <input th:if="${loggedEmail.equals(c.getUser().getEmail())}" class="btn btn-primary float-right" type="submit" value="delete">
                 </form>
-                <form th:if="${isAdmin == true && comment.getUser() == null}" th:action="@{'/delete_comment/' + ${comment.getId()}}" th:method="delete">
+                <form th:if="${isAdmin == true && c.getUser() == null}" th:action="@{'/delete_comment/' + ${c.getId()}}" th:method="delete">
                     <input class="btn btn-primary float-right" type="submit" value="delete">
                 </form>
             </div>
