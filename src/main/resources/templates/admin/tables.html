@@ -341,7 +341,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Contact Data</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -378,6 +378,54 @@
                       <td th:text="${contact.getMessage()}">message</td>
                       <td th:text="${contact.getDate_added()+''}">date</td>
                     </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!--XXXXXXXXXXXXXXXXXXx-->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">User Data</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                  <tr>
+                    <th>e-mail</th>
+                    <th>password</th>
+                    <th>activity</th>
+                    <th>role</th>
+                    <th>(+)/(-)</th>
+                  </tr>
+                  </thead>
+                  <tfoot>
+                  <tr>
+                    <th>e-mail</th>
+                    <th>password</th>
+                    <th>activity</th>
+                    <th>role</th>
+                    <th>(+)/(-)</th>
+                  </tr>
+                  </tfoot>
+                  <tbody th:each="user : ${users}">
+                  <tr>
+                    <td th:text="${user.getEmail()}">e-mail</td>
+                    <td th:text="${user.getPassword()}">password</td>
+                    <td th:text="${user.isActivity()}">activity</td>
+                    <td th:if="${user.getRoles().contains(role_admin)}" th:text="admin">role</td>
+                    <td>
+                      <form th:action="@{/addAdmin/+'${user.getId()}'}">
+                        <input type="submit" value="+">
+                      </form>
+                      <form th:action="@{/subAdmin/+'${user.getId()}'}">
+                        <input type="submit" value="-">
+                      </form>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
