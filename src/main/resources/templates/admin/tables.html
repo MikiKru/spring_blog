@@ -414,14 +414,15 @@
                   <tbody th:each="user : ${users}">
                   <tr>
                     <td th:text="${user.getEmail()}">e-mail</td>
-                    <td th:text="${user.getPassword()}">password</td>
+                    <td th:text="${user.getPassword().substring(user.getPassword().length()-8)}">password</td>
                     <td th:text="${user.isActivity()}">activity</td>
                     <td th:if="${user.getRoles().contains(role_admin)}" th:text="admin">role</td>
+                    <td th:if="${!user.getRoles().contains(role_admin)}" th:text="user">role</td>
                     <td>
-                      <form th:action="@{/addAdmin/+'${user.getId()}'}">
+                      <form th:if="${!user.getRoles().contains(role_admin)}"  th:action="@{'/addAdmin/'+${user.getId()}}" th:method="get">
                         <input type="submit" value="+">
                       </form>
-                      <form th:action="@{/subAdmin/+'${user.getId()}'}">
+                      <form th:if="${user.getRoles().contains(role_admin)}" th:action="@{'/subAdmin/'+${user.getId()}}" th:method="get">
                         <input type="submit" value="-">
                       </form>
                     </td>

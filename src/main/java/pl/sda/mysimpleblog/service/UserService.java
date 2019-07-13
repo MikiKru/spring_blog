@@ -40,4 +40,18 @@ public class UserService {
     public Role getAdminRole(){
         return roleRepository.getOne(2L);
     }
+
+    public User getUserById(Long user_id){
+        return userRepository.getOne(user_id);
+    }
+    public void addAdminRole(Long user_id){
+        User user = getUserById(user_id);
+        user.addRole(getAdminRole());
+        userRepository.save(user);
+    }
+    public void subAdminRole(Long user_id){
+        User user = getUserById(user_id);
+        user.subRole(getAdminRole());
+        userRepository.save(user);
+    }
 }

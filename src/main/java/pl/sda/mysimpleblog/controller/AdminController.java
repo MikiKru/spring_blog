@@ -32,5 +32,14 @@ public class AdminController {
         model.addAttribute("contacts",contactService.getAllContacts());
         return "admin/tables";
     }
-
+    @GetMapping("/addAdmin/{user_id}")
+    public String addAdmin(@PathVariable Long user_id){
+        userService.addAdminRole(user_id);
+        return "redirect:/admin";
+    }
+    @GetMapping("/subAdmin/{user_id}")
+    public String subAdmin(@PathVariable Long user_id){
+        userService.subAdminRole(user_id);
+        return "redirect:/admin";
+    }
 }
