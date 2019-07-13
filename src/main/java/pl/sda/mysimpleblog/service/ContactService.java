@@ -23,5 +23,9 @@ public class ContactService {
         contact.setStatus(!contact.isStatus());
         contactRepository.save(contact);
     }
+    public List<Contact> searchedContacts(String pattern){
+        pattern = "%" + pattern + "%";
+        return  contactRepository.findAllByEmailLikeOrMessageLikeOrNameLikeOrPhoneLike(pattern,pattern,pattern,pattern);
+    }
 
 }
